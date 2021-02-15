@@ -13,6 +13,8 @@ type Post
   content: String!
   owner: String
   timestamp: Int!
+  createdAt: AWSDateTime
+  updatedAt:AWSDateTime
 }
 
 type FollowRelationship
@@ -27,6 +29,8 @@ type FollowRelationship
   followeeId: ID!
   followerId: ID!
   timestamp: Int!
+  createdAt: AWSDateTime
+  updatedAt:AWSDateTime
 }
 
 type Timeline
@@ -41,6 +45,8 @@ type Timeline
   timestamp: Int!
   postId: ID!
   post: Post @connection(fields: ["postId"])
+  createdAt: AWSDateTime
+  updatedAt:AWSDateTime
 }
 
 type Mutation
