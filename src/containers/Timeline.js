@@ -9,6 +9,7 @@ import _ from 'lodash';
 
 import PostList from '../components/PostList';
 import Sidebar from './Sidebar';
+import { Typography } from '@material-ui/core';
 
 const SUBSCRIPTION = 'SUBSCRIPTION';
 const INITIAL_QUERY = 'INITIAL_QUERY';
@@ -79,15 +80,20 @@ export default function Timeline() {
 
   return (
     <React.Fragment>
-      <Sidebar 
-        activeListItem='Home'
-      />
-      <PostList
-        isLoading={isLoading}
-        posts={posts}
-        getAdditionalPosts={getAdditionalPosts}
-        listHeaderTitle={'Home'}
-      />
+      <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+        <Typography variant={"h3"} component={"h1"}>
+          {currentUser ? `Hi this is ${currentUser.username}` : "loading..."}
+        </Typography>
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          <Sidebar activeListItem="Home" />
+          <PostList
+            isLoading={isLoading}
+            posts={posts}
+            getAdditionalPosts={getAdditionalPosts}
+            listHeaderTitle={"Home"}
+          />
+        </div>
+      </div>
     </React.Fragment>
-  )
+  );
 }

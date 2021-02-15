@@ -62,14 +62,14 @@ export default function PostList({ isLoading, posts, getAdditionalPosts, listHea
             <Typography
               variant='h5'
               fontWeight="fontWeightBold"
-              maxWidth
+              className={classes.maxWidth}
             >
               {listHeaderTitle}
               {listHeaderTitleButton && listHeaderTitleButton}
             </Typography>
           </ListItem>
-          {posts.map(post => (
-            <span>
+          {posts.map((post,index) => (
+            <span key={`post-list-${index}`}>
               <PostItem post={post} />
               <Divider component="li" />
             </span>

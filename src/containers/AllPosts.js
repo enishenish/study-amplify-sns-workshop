@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useReducer } from 'react';
 
 import API, { graphqlOperation } from '@aws-amplify/api';
+import Auth from '@aws-amplify/auth';
 
 import { listPostsSortedByTimestamp } from '../graphql/queries';
 import { onCreatePost } from '../graphql/subscriptions';
 
 import PostList from '../components/PostList';
 import Sidebar from './Sidebar';
+import { Typography } from '@material-ui/core';
 
 const SUBSCRIPTION = 'SUBSCRIPTION';
 const INITIAL_QUERY = 'INITIAL_QUERY';
@@ -29,6 +31,7 @@ export default function AllPosts() {
   const [posts, dispatch] = useReducer(reducer, []);
   const [nextToken, setNextToken] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentUser, setCurrentUser] = useState(null);
 
   const getPosts = async (type, nextToken = null) => {
     const res = await API.graphql(graphqlOperation(listPostsSortedByTimestamp, {
@@ -61,18 +64,34 @@ export default function AllPosts() {
     return () => subscription.unsubscribe();
   }, []);
 
+  useEffect(() => {
+    console.log('init')
+    const init = async () => {
+      const currentUser = await Auth.currentAuthenticatedUser();
+      setCurrentUser(currentUser);
+
+      getPosts(INITIAL_QUERY, currentUser);
+    }
+
+    init();
+  }, []);
 
   return (
     <React.Fragment>
-      <Sidebar 
-        activeListItem='global-timeline'
-      />
-      <PostList
-        isLoading={isLoading}
-        posts={posts}
-        getAdditionalPosts={getAdditionalPosts}
-        listHeaderTitle={'Global Timeline'}
-      />
+      <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+        <Typography variant={"h3"} component={"h1"}>
+          {currentUser ? `Hi this is ${currentUser.username}` : "loading..."}
+        </Typography>
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          <Sidebar activeListItem="global-timeline" />
+          <PostList
+            isLoading={isLoading}
+            posts={posts}
+            getAdditionalPosts={getAdditionalPosts}
+            listHeaderTitle={"Global Timeline"}
+          />
+        </div>
+      </div>
     </React.Fragment>
-  )
+  );
 }

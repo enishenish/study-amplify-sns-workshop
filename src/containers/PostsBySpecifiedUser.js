@@ -4,6 +4,7 @@ import API, { graphqlOperation } from '@aws-amplify/api';
 import Auth from '@aws-amplify/auth';
 import { useParams, useHistory } from 'react-router';
 import { Box, Button} from '@material-ui/core';
+import { Typography } from '@material-ui/core';
 
 import { listPostsBySpecificOwner, getFollowRelationship } from '../graphql/queries';
 import { onCreatePost } from '../graphql/subscriptions';
@@ -112,23 +113,33 @@ export default function PostsBySpecifiedUser() {
 
   return (
     <React.Fragment>
-      <Sidebar 
-        activeListItem='profile'
-      />
-      <PostList
-        isLoading={isLoading}
-        posts={posts}
-        getAdditionalPosts={getAdditionalPosts}
-        listHeaderTitle={userId}
-        listHeaderTitleButton={
-          ( currentUser && userId !== currentUser.username ) &&
-          ( isFollowing ? 
-            <Button  variant='contained' color='primary' onClick={unfollow}>Following</Button> 
-          :
-            <Button variant='outlined' color='primary' onClick={follow}>Follow</Button> 
-          )
-        }
-      />
+      <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+        <Typography variant={"h3"} component={"h1"}>
+          {currentUser ? `Hi this is ${currentUser.username}` : "loading..."}
+        </Typography>
+        <div style={{ display: "flex", flexDirection: "row" }}>
+          <Sidebar activeListItem="profile" />
+          <PostList
+            isLoading={isLoading}
+            posts={posts}
+            getAdditionalPosts={getAdditionalPosts}
+            listHeaderTitle={userId}
+            listHeaderTitleButton={
+              currentUser &&
+              userId !== currentUser.username &&
+              (isFollowing ? (
+                <Button variant="contained" color="primary" onClick={unfollow}>
+                  Following
+                </Button>
+              ) : (
+                <Button variant="outlined" color="primary" onClick={follow}>
+                  Follow
+                </Button>
+              ))
+            }
+          />
+        </div>
+      </div>
     </React.Fragment>
-  )
+  );
 }
