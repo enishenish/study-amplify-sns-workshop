@@ -36,20 +36,20 @@ type Timeline
     {allow: private, provider: iam, operations:[create]},
   ]}
   @key(fields: ["userId", "timestamp"])
-  {
-    userId: ID!
-    timestamp: Int!
-    postId: ID!
-    post: Post @connections(fields: ["postId"])
-  }
+{
+  userId: ID!
+  timestamp: Int!
+  postId: ID!
+  post: Post @connections(fields: ["postId"])
+}
 
-  type Mutation
-  {
-    createPostAndTimeline (
-      content: String!
-    ): Post
-    @function (name: "createPostAndTimeline-${env}")
-    @auth(rules: [
-      {allow: private, provider: userPools},
-    ])
-  }
+type Mutation
+{
+  createPostAndTimeline (
+    content: String!
+  ): Post
+  @function (name: "createPostAndTimeline-${env}")
+  @auth(rules: [
+    {allow: private, provider: userPools},
+  ])
+}

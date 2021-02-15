@@ -6,6 +6,7 @@ var apiGraphqlapiGraphQLAPIIdOutput = process.env.API_BOYAKIGQL_GRAPHQLAPIIDOUTP
 var apiGraphqlapiGraphQLAPIEndpointOutput = process.env.API_BOYAKIGQL_GRAPHQLAPIENDPOINTOUTPUT
 
 Amplify Params - DO NOT EDIT */
+'use strict'
 
 const AWSAppSyncClient = require("aws-appsync").default;
 const gql = require("graphql-tag");
@@ -40,7 +41,7 @@ exports.handler = async (event, context, callback) => {
     // for local mock
     env = {
       API_BOYAKIGQL_GRAPHQLAPIENDPOINTOUTPUT:
-        "http://192.168.1.2:20002/graphql",
+        "http://localhost:20002/graphql",
       REGION: "us-east-1",
     };
     graphql_auth = {
