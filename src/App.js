@@ -1,6 +1,10 @@
 import React from 'react';
 import './App.css';
 
+import Amplify from '@aws-amplify/core';
+import PubSub from '@aws-amplify/pubsub';
+import awsmobile from './aws-exports';
+
 import { withAuthenticator } from 'aws-amplify-react';
 
 import {
@@ -12,16 +16,12 @@ import {
 
 import { makeStyles, createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-
 import AllPosts from './containers/AllPosts';
 import PostsBySpecifiedUser from './containers/PostsBySpecifiedUser';
-
-import Amplify from '@aws-amplify/core';
-import PubSub from '@aws-amplify/pubsub'
-import awsmobile from './aws-exports';
+import Timeline from './containers/Timeline';
 
 Amplify.configure(awsmobile);
-PubSub.configure(awsmobile)
+PubSub.configure(awsmobile);
 
 const drawerWidth = 240;
 
@@ -87,7 +87,7 @@ function App() {
         <CssBaseline />
         <HashRouter>
           <Switch>
-            <Route exact path='/' component={AllPosts} />
+            <Route exact path='/' component={Timeline} />
             <Route exact path='/global-timeline' component={AllPosts} />
             <Route exact path='/:userId' component={PostsBySpecifiedUser}/>
             <Redirect path="*" to="/" />
@@ -102,4 +102,4 @@ export default withAuthenticator(App, {
   signUpConfig: {
     hiddenDefaults: ['phone_number']
   }
-})
+});

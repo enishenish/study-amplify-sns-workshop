@@ -13,12 +13,13 @@ import {
 import {
   Person as PersonIcon,
   Public as PublicIcon,
+  Home as HomeIcon,
 } from '@material-ui/icons';
 
 import API, { graphqlOperation } from '@aws-amplify/api';
 import Auth from '@aws-amplify/auth';
 
-import { createPost } from '../graphql/mutations';
+import { createPostAndTimeline } from '../graphql/mutations';
 import { useHistory } from 'react-router';
 
 const drawerWidth = 340;
@@ -64,11 +65,7 @@ export default function Sidebar({activeListItem}) {
   };
 
   const onPost = async () => {
-    const res = await API.graphql(graphqlOperation(createPost, { input: {
-      type: 'post',
-      content: value,
-      timestamp: Math.floor(Date.now() / 1000),
-    }})); 
+    const res = await API.graphql(graphqlOperation(createPostAndTimeline, { content: value }));
 
     console.log(res)
     setValue('');
@@ -91,6 +88,17 @@ export default function Sidebar({activeListItem}) {
     >
       <div className={classes.toolbar} />
       <List>
+        <ListItem
+            button
+            selected={activeListItem === 'Home'}
+            onClick={() => { history.push('/')}}
+            key='home'
+          >
+          <ListItemIcon>
+            <HomeIcon />
+          </ListItemIcon>
+          <ListItemText primary="Home" />
+        </ListItem>
         <ListItem
           button
           selected={activeListItem === 'global-timeline'}
