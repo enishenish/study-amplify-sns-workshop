@@ -40,7 +40,7 @@ exports.handler = async (event, context, callback) => {
   } else {
     // for local mock
     env = {
-      API_BOYAKIGQL_GRAPHQLAPIENDPOINTOUTPUT:
+      API_BOYAKI_GRAPHQLAPIENDPOINTOUTPUT:
         "http://localhost:20002/graphql",
       REGION: "us-east-1",
     };
@@ -58,7 +58,7 @@ exports.handler = async (event, context, callback) => {
 
   if (!graphqlClient) {
     graphqlClient = new AWSAppSyncClient({
-      url: env.API_BOYAKIGQL_GRAPHQLAPIENDPOINTOUTPUT,
+      url: env.API_BOYAKI_GRAPHQLAPIENDPOINTOUTPUT,
       region: env.REGION,
       auth: graphql_auth,
       disableOffline: true,
