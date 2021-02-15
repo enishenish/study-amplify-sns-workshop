@@ -34,38 +34,56 @@ export const listPosts = /* GraphQL */ `
     }
   }
 `;
-export const getFollowRelationship = /* GraphQL */ `
-  query GetFollowRelationship($followeeId: ID!, $followerId: ID!) {
-    getFollowRelationship(followeeId: $followeeId, followerId: $followerId) {
-      followeeId
-      followerId
+export const getTimeline = /* GraphQL */ `
+  query GetTimeline($userId: ID!, $timestamp: Int!) {
+    getTimeline(userId: $userId, timestamp: $timestamp) {
+      userId
       timestamp
+      postId
+      post {
+        type
+        id
+        content
+        owner
+        timestamp
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }
   }
 `;
-export const listFollowRelationships = /* GraphQL */ `
-  query ListFollowRelationships(
-    $followeeId: ID
-    $followerId: ModelIDKeyConditionInput
-    $filter: ModelFollowRelationshipFilterInput
+export const listTimelines = /* GraphQL */ `
+  query ListTimelines(
+    $userId: ID
+    $timestamp: ModelIntKeyConditionInput
+    $filter: ModelTimelineFilterInput
     $limit: Int
     $nextToken: String
     $sortDirection: ModelSortDirection
   ) {
-    listFollowRelationships(
-      followeeId: $followeeId
-      followerId: $followerId
+    listTimelines(
+      userId: $userId
+      timestamp: $timestamp
       filter: $filter
       limit: $limit
       nextToken: $nextToken
       sortDirection: $sortDirection
     ) {
       items {
-        followeeId
-        followerId
+        userId
         timestamp
+        postId
+        post {
+          type
+          id
+          content
+          owner
+          timestamp
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }
@@ -125,6 +143,45 @@ export const listPostsBySpecificOwner = /* GraphQL */ `
         id
         content
         owner
+        timestamp
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getFollowRelationship = /* GraphQL */ `
+  query GetFollowRelationship($followeeId: ID!, $followerId: ID!) {
+    getFollowRelationship(followeeId: $followeeId, followerId: $followerId) {
+      followeeId
+      followerId
+      timestamp
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listFollowRelationships = /* GraphQL */ `
+  query ListFollowRelationships(
+    $followeeId: ID
+    $followerId: ModelIDKeyConditionInput
+    $filter: ModelFollowRelationshipFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listFollowRelationships(
+      followeeId: $followeeId
+      followerId: $followerId
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        followeeId
+        followerId
         timestamp
         createdAt
         updatedAt

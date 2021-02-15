@@ -31,16 +31,16 @@ type FollowRelationship
 
 type Timeline
   @model
-  @auth{rules: [
+  @auth(rules: [
     {allow: owner, ownerField: "userId", provider: userPools, operations:[read, create]},
     {allow: private, provider: iam, operations:[create]},
-  ]}
+  ])
   @key(fields: ["userId", "timestamp"])
 {
   userId: ID!
   timestamp: Int!
   postId: ID!
-  post: Post @connections(fields: ["postId"])
+  post: Post @connection(fields: ["postId"])
 }
 
 type Mutation

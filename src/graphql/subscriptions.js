@@ -40,6 +40,66 @@ export const onDeletePost = /* GraphQL */ `
     }
   }
 `;
+export const onCreateTimeline = /* GraphQL */ `
+  subscription OnCreateTimeline($userId: String!) {
+    onCreateTimeline(userId: $userId) {
+      userId
+      timestamp
+      postId
+      post {
+        type
+        id
+        content
+        owner
+        timestamp
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateTimeline = /* GraphQL */ `
+  subscription OnUpdateTimeline($userId: String!) {
+    onUpdateTimeline(userId: $userId) {
+      userId
+      timestamp
+      postId
+      post {
+        type
+        id
+        content
+        owner
+        timestamp
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteTimeline = /* GraphQL */ `
+  subscription OnDeleteTimeline($userId: String!) {
+    onDeleteTimeline(userId: $userId) {
+      userId
+      timestamp
+      postId
+      post {
+        type
+        id
+        content
+        owner
+        timestamp
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
 export const onCreateFollowRelationship = /* GraphQL */ `
   subscription OnCreateFollowRelationship {
     onCreateFollowRelationship {

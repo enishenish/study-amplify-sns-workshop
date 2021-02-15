@@ -112,6 +112,7 @@ exports.handler = async (event, context, callback) => {
 };
 
 const createTimelineForAUser = async ({ follower, post }) => {
+  console.log(follower);
   const timelineInput = {
     mutation: gql(createTimeline),
     variables: {
