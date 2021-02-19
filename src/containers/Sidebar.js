@@ -14,6 +14,7 @@ import {
   Person as PersonIcon,
   Public as PublicIcon,
   Home as HomeIcon,
+  Search as SearchIcon
 } from '@material-ui/icons';
 
 import API, { graphqlOperation } from '@aws-amplify/api';
@@ -89,25 +90,44 @@ export default function Sidebar({activeListItem}) {
       <div className={classes.toolbar} />
       <List>
         <ListItem
-            button
-            selected={activeListItem === 'Home'}
-            onClick={() => { history.push('/')}}
-            key='home'
-          >
+          button
+          selected={activeListItem === "Home"}
+          onClick={() => {
+            history.push("/");
+          }}
+          key="home"
+        >
           <ListItemIcon>
             <HomeIcon />
           </ListItemIcon>
           <ListItemText primary="Home" />
         </ListItem>
+
         <ListItem
           button
-          selected={activeListItem === 'global-timeline'}
+          selected={activeListItem === "search"}
           onClick={() => {
             Auth.currentAuthenticatedUser().then((user) => {
-              history.push('/global-timeline');
-            })
+              history.push("search");
+            });
           }}
-          key='global-timeline'
+          key="search"
+        >
+          <ListItemIcon>
+            <SearchIcon />
+          </ListItemIcon>
+          <ListItemText primary="Search" />
+        </ListItem>
+
+        <ListItem
+          button
+          selected={activeListItem === "global-timeline"}
+          onClick={() => {
+            Auth.currentAuthenticatedUser().then((user) => {
+              history.push("/global-timeline");
+            });
+          }}
+          key="global-timeline"
         >
           <ListItemIcon>
             <PublicIcon />
@@ -116,61 +136,63 @@ export default function Sidebar({activeListItem}) {
         </ListItem>
         <ListItem
           button
-          selected={activeListItem === 'profile'}
+          selected={activeListItem === "profile"}
           onClick={() => {
             Auth.currentAuthenticatedUser().then((user) => {
-              history.push('/' + user.username);
-            })
+              history.push("/" + user.username);
+            });
           }}
-          key='profile'
+          key="profile"
         >
           <ListItemIcon>
             <PersonIcon />
           </ListItemIcon>
           <ListItemText primary="Profile" />
         </ListItem>
-        <ListItem key='post-input-field'>
-          <ListItemText primary={
-            <TextField
-              error={isError}
-              helperText={helperText}
-              id="post-input"
-              label="Type your post!"
-              multiline
-              rowsMax="8"
-              variant="filled"
-              value={value}
-              onChange={handleChange}
-              fullWidth
-              margin="normal"
-            />
-          } />
+        <ListItem key="post-input-field">
+          <ListItemText
+            primary={
+              <TextField
+                error={isError}
+                helperText={helperText}
+                id="post-input"
+                label="Type your post!"
+                multiline
+                rowsMax="8"
+                variant="filled"
+                value={value}
+                onChange={handleChange}
+                fullWidth
+                margin="normal"
+              />
+            }
+          />
         </ListItem>
-        <ListItem key='post-button'>
-          <ListItemText primary={
-            <Button
-              variant="contained"
-              color="primary"
-              disabled={isError}
-              onClick={onPost}
-              fullWidth
-            >
-              Post
-            </Button>
-          } />
+        <ListItem key="post-button">
+          <ListItemText
+            primary={
+              <Button
+                variant="contained"
+                color="primary"
+                disabled={isError}
+                onClick={onPost}
+                fullWidth
+              >
+                Post
+              </Button>
+            }
+          />
         </ListItem>
-        <ListItem key='logout'>
-          <ListItemText primary={
-            <Button
-              variant="outlined"
-              onClick={signOut}
-              fullWidth
-            >
-              Logout
-            </Button>
-          } />
+        <ListItem key="logout">
+          <ListItemText
+            primary={
+              <Button variant="outlined" onClick={signOut} fullWidth>
+                Logout
+              </Button>
+            }
+          />
         </ListItem>
       </List>
     </Drawer>
-  )
+  );
 }

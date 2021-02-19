@@ -19,6 +19,7 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import AllPosts from './containers/AllPosts';
 import PostsBySpecifiedUser from './containers/PostsBySpecifiedUser';
 import Timeline from './containers/Timeline';
+import Search from './containers/Search';
 
 Amplify.configure(awsmobile);
 PubSub.configure(awsmobile);
@@ -88,6 +89,7 @@ function App() {
         <HashRouter>
           <Switch>
             <Route exact path='/' component={Timeline} />
+            <Route exact path='/search' component={Search} />
             <Route exact path='/global-timeline' component={AllPosts} />
             <Route exact path='/:userId' component={PostsBySpecifiedUser}/>
             <Redirect path="*" to="/" />

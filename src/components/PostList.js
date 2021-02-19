@@ -95,7 +95,7 @@ function PostItem({ post }) {
   const classes = useStyles();
   const history = useHistory();
   const now = moment();
-  console.log(now)
+  //console.log(now)
 
   const calcTimestampDiff = (timestamp) => {
     const scales = ['years', 'months', 'weeks', 'days', 'hours', 'minutes', 'seconds'];

@@ -7,6 +7,7 @@ type Post
   ])
   @key(name: "SortByTimestamp", fields:["type", "timestamp"], queryField: "listPostsSortedByTimestamp")
   @key(name: "BySpecificOwner", fields:["owner", "timestamp"], queryField: "listPostsBySpecificOwner")
+  @searchable
 {
   type: String!
   id: ID

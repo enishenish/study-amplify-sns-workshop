@@ -151,6 +151,35 @@ export const listPostsBySpecificOwner = /* GraphQL */ `
     }
   }
 `;
+export const searchPosts = /* GraphQL */ `
+  query SearchPosts(
+    $filter: SearchablePostFilterInput
+    $sort: SearchablePostSortInput
+    $limit: Int
+    $nextToken: String
+    $from: Int
+  ) {
+    searchPosts(
+      filter: $filter
+      sort: $sort
+      limit: $limit
+      nextToken: $nextToken
+      from: $from
+    ) {
+      items {
+        type
+        id
+        content
+        owner
+        timestamp
+        createdAt
+        updatedAt
+      }
+      nextToken
+      total
+    }
+  }
+`;
 export const getFollowRelationship = /* GraphQL */ `
   query GetFollowRelationship($followeeId: ID!, $followerId: ID!) {
     getFollowRelationship(followeeId: $followeeId, followerId: $followerId) {
