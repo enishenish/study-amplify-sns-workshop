@@ -16,6 +16,7 @@ const INITIAL_QUERY = 'INITIAL_QUERY';
 const ADDITIONAL_QUERY = 'ADDITIONAL_QUERY';
 
 const reducer = (state, action) => {
+  console.log(`${state} ${action}`);
   switch (action.type) {
     case INITIAL_QUERY:
       return action.posts;
@@ -75,8 +76,9 @@ export default function Timeline() {
           dispatch({ type: SUBSCRIPTION, post: msg.value.data.onCreateTimeline.post });
         }
       });
-    return () => subscription.unsubscribe();
-  }, [currentUser])
+    return () => {subscription.unsubscribe(); console.log("unsubscribed!");};
+  //}, [currentUser])
+  })
 
   return (
     <React.Fragment>
